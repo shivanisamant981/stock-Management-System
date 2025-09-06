@@ -22,7 +22,7 @@ def product_management():
         elif n==3:
             update_product()
         elif n==4:
-            delete_poduct()
+            delete_product()
         elif n==5:
             break;
 def purchase_management():
@@ -199,7 +199,50 @@ def list_product():
     print("\t\t","-"*47)
 
 def update_product():
+    mydb=mysql.connector.connect(host="localhost",user="root", passwd="743211", database="stock")
+    mycursor=mydb.cursor()
+    code=int(input("enter the code"))
+    qty=int(input("enter the quantity"))
+    sql="UPDATE product SET pqty=pqty+%s WHERE  pcode=%s;"
+    val=(qty,code)
+    mycursor.execute(sql, val)
+    mydb.commit()
+    print("\t\t Product details update")
 
+def delete_product():
+    mydb=mysql.connector.connect(host="localhost",user="root", passwd="743211", database="stock")
+    mycursor=mydb.cursor()
+    code=int(input("ENTER the prodcut code"))
+    sql="DELETE from product where pcode=%s;"
+    val=(code,)
+    mycursor.execute(sql, val)
+    mydb.commit()
+    
+def add_user():
+    mydb=mysql.connector.connect(host="localhost",user="root", passwd="743211", database="stock")
+    mycursor=mydb.cursor()
+    userid=int(input("Enter the userid"))
+    username=input("Enter the name")
+    userpwd=int(input("Enter the password"))
+    sql="INSERT INTO user values(%s,%s,%s);"
+    val=(userid, username,userpwd)
+    mycursor.execute(sql, val)
+    mydb.commit()
+
+def list_user():
+    mydb=mysql.connector.connect(host="localhost",user="root", passwd="743211", database="stock")
+    mycursor=mydb.cursor()
+    sql="Select * from user";
+    mycursor.execute(sql);
+    print("\t\t\t","-"*40 )
+    print("-"*30,"user DETAILS")
+    print("\t userid \t\t username \t\t userpwd")
+    for i in mycursor:
+        print(i[0],"\t\t",i[1],"\t\t",i[2]);
+    print("\t\t\t","-"*40)
+
+    
+    
         
 
  
